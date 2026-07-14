@@ -125,6 +125,54 @@ function ZoomableMedia({ src, hint }: { src: string; hint: string }) {
   )
 }
 
+const RESUME_PDF = '/resume/Nicholas_Amalraj_Resume.pdf'
+const RESUME_PREVIEW = '/resume/resume-preview.png'
+
+// Zoomable resume preview (page 1), consistent with the other attachments.
+function ResumePreview() {
+  return (
+    <MorphingDialog
+      transition={{
+        type: 'spring',
+        bounce: 0,
+        duration: 0.3,
+      }}
+    >
+      <MorphingDialogTrigger>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={RESUME_PREVIEW}
+          alt="Preview of Nicholas Amalraj's resume"
+          className="mx-auto aspect-[8.5/11] w-full max-w-[300px] cursor-zoom-in rounded-lg bg-white object-cover object-top shadow-sm ring-1 ring-zinc-200/60 dark:ring-zinc-800/60"
+        />
+      </MorphingDialogTrigger>
+      <MorphingDialogContainer>
+        <MorphingDialogContent className="relative rounded-2xl bg-zinc-50 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950 dark:ring-zinc-800/50">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={RESUME_PREVIEW}
+            alt="Nicholas Amalraj's resume"
+            className="h-[85vh] w-auto rounded-lg bg-white object-contain"
+          />
+        </MorphingDialogContent>
+        <MorphingDialogClose
+          className="fixed top-6 right-6 h-fit w-fit rounded-full bg-white p-1"
+          variants={{
+            initial: { opacity: 0 },
+            animate: {
+              opacity: 1,
+              transition: { delay: 0.3, duration: 0.1 },
+            },
+            exit: { opacity: 0, transition: { duration: 0 } },
+          }}
+        >
+          <XIcon className="h-5 w-5 text-zinc-500" />
+        </MorphingDialogClose>
+      </MorphingDialogContainer>
+    </MorphingDialog>
+  )
+}
+
 function MagneticSocialLink({
   children,
   link,
@@ -177,6 +225,29 @@ export default function Personal() {
             at the University of Michigan studying computer science. My interests are 
             in fullstack/backend development, distributed systems, and AI engineering.
           </p>
+        </div>
+      </motion.section>
+
+      <motion.section
+        variants={VARIANTS_SECTION}
+        transition={TRANSITION_SECTION}
+      >
+        <h3 className="mb-5 text-lg font-medium">Resume</h3>
+        <div className="space-y-2">
+          <div className="relative rounded-2xl bg-zinc-50/40 p-4 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
+            <ResumePreview />
+          </div>
+          <div className="px-1">
+            <a
+              className="font-base group relative inline-block font-[450] text-zinc-900 dark:text-zinc-50"
+              href={RESUME_PDF}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Download full resume (PDF)
+              <span className="absolute bottom-0.5 left-0 block h-[1px] w-full max-w-0 bg-zinc-900 transition-all duration-200 group-hover:max-w-full dark:bg-zinc-50"></span>
+            </a>
+          </div>
         </div>
       </motion.section>
 
