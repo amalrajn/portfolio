@@ -1,8 +1,11 @@
 type Project = {
   name: string
   description: string
+  tech: string
   link: string
-  video: string
+  // Path to a screenshot/gif/video in /public (e.g. '/projects/search-engine.jpg').
+  // Leave '' to show a labeled placeholder. .mp4/.webm render as autoplay video.
+  src: string
   id: string
 }
 
@@ -15,11 +18,11 @@ type WorkExperience = {
   id: string
 }
 
-type BlogPost = {
-  title: string
-  description: string
-  link: string
-  uid: string
+type Travel = {
+  place: string
+  // Path to a photo in /public (e.g. '/travel/tokyo.jpg'). Leave '' for a placeholder.
+  src: string
+  id: string
 }
 
 type SocialLink = {
@@ -29,97 +32,93 @@ type SocialLink = {
 
 export const PROJECTS: Project[] = [
   {
-    name: 'Motion Primitives Pro',
+    name: 'World Cup RAG Pipeline',
     description:
-      'Advanced components and templates to craft beautiful websites.',
-    link: 'https://pro.motion-primitives.com/',
-    video:
-      'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0',
-    id: 'project1',
+      'RAG Pipeline to help Gemini 2.5 Flash answer World Cup trivia questions correctly.',
+    tech: 'Python · ChromaDB · SentenceTransformers · Gemini 2.5 Flash · Gradio',
+    link: 'https://world-cup-rag-pipeline-215930731805.us-central1.run.app/?', // TODO: your live demo URL (Gradio/HF Space) or GitHub repo
+    src: '/projects/wc_rag.png', // TODO: drop a screenshot or gif at /public/projects/worldcup-rag.jpg
+    id: 'project-rag',
   },
   {
-    name: 'Motion Primitives',
-    description: 'UI kit to make beautiful, animated interfaces.',
-    link: 'https://motion-primitives.com/',
-    video:
-      'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/XSfIvT7BUWbPRXhrbLed/ee6871c9-8400-49d2-8be9-e32675eabf7e.mp4?_a=DATAdtAAZAA0',
-    id: 'project2',
+    name: 'UEFA Euro 2024 Predictor',
+    description:
+      'Machine Learning model to predict the entire Euro 2024 tournament.',
+    tech: 'Python · scikit-learn · pandas · MySQL',
+    link: 'https://github.com/ayannair/euros_2024_predictor', // TODO: GitHub repo URL
+    src: '/projects/EURO2024.jpg', // TODO: drop a screenshot or gif at /public/projects/search-engine.jpg
+    id: 'project-search',
+  },
+  {
+    name: 'M-Gym (WIP)',
+    description:
+      'Real-time and predictive crowd tracking for UMich recreation centers.',
+    tech: 'Node.js · Express.js · React.js · PostgreSQL · Redis · AWS',
+    link: 'https://github.com/amalrajn/m-gym', // TODO: GitHub repo URL
+    src: '/projects/hadley.jpg', // TODO: drop a screenshot or gif at /public/projects/pager.jpg
+    id: 'project-pager',
   },
 ]
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
-    company: 'Reglazed Studio',
-    title: 'CEO',
-    start: '2024',
+    company: 'Consumers Energy',
+    title: 'Software Engineering Intern',
+    start: 'May 2026',
     end: 'Present',
-    link: 'https://ibelick.com',
+    link: 'https://www.consumersenergy.com/',
     id: 'work1',
   },
   {
-    company: 'Freelance',
-    title: 'Design Engineer',
-    start: '2022',
-    end: '2024',
-    link: 'https://ibelick.com',
+    company: 'Consumers Energy',
+    title: 'Software Engineering Intern',
+    start: 'May 2025',
+    end: 'Aug 2025',
+    link: 'https://www.consumersenergy.com/',
     id: 'work2',
   },
   {
-    company: 'Freelance',
-    title: 'Front-end Developer',
-    start: '2017',
-    end: 'Present',
-    link: 'https://ibelick.com',
+    company: 'Michigan AI Lab',
+    title: 'Machine Learning Intern',
+    start: 'May 2024',
+    end: 'Aug 2024',
+    link: 'https://ai.engin.umich.edu/',
     id: 'work3',
   },
 ]
 
-export const BLOG_POSTS: BlogPost[] = [
+export const TRAVELS: Travel[] = [
   {
-    title: 'Exploring the Intersection of Design, AI, and Design Engineering',
-    description: 'How AI is changing the way we design',
-    link: '/blog/exploring-the-intersection-of-design-ai-and-design-engineering',
-    uid: 'blog-1',
+    place: 'Tottenham Hotspur Stadium',
+    src: '/travel/thfc_stad.jpeg', // TODO: drop a photo at /public/travel/photo-1.jpg
+    id: 'travel-1',
   },
   {
-    title: 'Why I left my job to start my own company',
-    description:
-      'A deep dive into my decision to leave my job and start my own company',
-    link: '/blog/exploring-the-intersection-of-design-ai-and-design-engineering',
-    uid: 'blog-2',
+    place: 'Horseshoe Bend',
+    src: '/travel/h_bend.jpeg', // TODO: drop a photo at /public/travel/photo-2.jpg
+    id: 'travel-2',
   },
   {
-    title: 'What I learned from my first year of freelancing',
-    description:
-      'A look back at my first year of freelancing and what I learned',
-    link: '/blog/exploring-the-intersection-of-design-ai-and-design-engineering',
-    uid: 'blog-3',
+    place: 'Swiss Alps',
+    src: '/travel/swiss_alps.jpeg', // TODO: drop a photo at /public/travel/photo-3.jpg
+    id: 'travel-3',
   },
   {
-    title: 'How to Export Metadata from MDX for Next.js SEO',
-    description: 'A guide on exporting metadata from MDX files to leverage Next.js SEO features.',
-    link: '/blog/example-mdx-metadata',
-    uid: 'blog-4',
+    place: 'Cologne Cathedral',
+    src: '/travel/koln_cathedral.jpeg', // TODO: drop a photo at /public/travel/photo-4.jpg
+    id: 'travel-4',
   },
 ]
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'Github',
-    link: 'https://github.com/ibelick',
-  },
-  {
-    label: 'Twitter',
-    link: 'https://twitter.com/ibelick',
+    link: 'https://github.com/amalrajn',
   },
   {
     label: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/ibelick',
-  },
-  {
-    label: 'Instagram',
-    link: 'https://www.instagram.com/ibelick',
+    link: 'https://www.linkedin.com/in/nicholas-amalraj',
   },
 ]
 
-export const EMAIL = 'your@email.com'
+export const EMAIL = 'amalrajn@umich.edu'

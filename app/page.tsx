@@ -10,12 +10,10 @@ import {
   MorphingDialogClose,
   MorphingDialogContainer,
 } from '@/components/ui/morphing-dialog'
-import Link from 'next/link'
-import { AnimatedBackground } from '@/components/ui/animated-background'
 import {
   PROJECTS,
   WORK_EXPERIENCE,
-  BLOG_POSTS,
+  TRAVELS,
   EMAIL,
   SOCIAL_LINKS,
 } from './data'
@@ -39,11 +37,63 @@ const TRANSITION_SECTION = {
   duration: 0.3,
 }
 
-type ProjectVideoProps = {
-  src: string
+function isVideo(src: string) {
+  return /\.(mp4|webm|mov)$/i.test(src)
 }
 
-function ProjectVideo({ src }: ProjectVideoProps) {
+// Placeholder shown until a real image/gif/video is dropped into /public.
+function MediaPlaceholder({ hint }: { hint: string }) {
+  return (
+    <div className="flex aspect-video w-full flex-col items-center justify-center rounded-xl border border-dashed border-zinc-300 bg-gradient-to-br from-zinc-100 to-zinc-200 text-center dark:border-zinc-700 dark:from-zinc-900 dark:to-zinc-800">
+      <span className="px-4 text-xs text-zinc-500 dark:text-zinc-400">
+        {hint}
+      </span>
+    </div>
+  )
+}
+
+// Renders a zoomable image/gif/video, or a placeholder when no src is set yet.
+function ZoomableMedia({ src, hint }: { src: string; hint: string }) {
+  if (!src) {
+    return <MediaPlaceholder hint={hint} />
+  }
+
+  const Thumb = isVideo(src) ? (
+    <video
+      src={src}
+      autoPlay
+      loop
+      muted
+      playsInline
+      className="aspect-video w-full cursor-zoom-in rounded-xl object-cover"
+    />
+  ) : (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={hint}
+      className="aspect-video w-full cursor-zoom-in rounded-xl object-cover"
+    />
+  )
+
+  const Full = isVideo(src) ? (
+    <video
+      src={src}
+      autoPlay
+      loop
+      muted
+      playsInline
+      className="h-[50vh] w-full rounded-xl object-contain md:h-[70vh]"
+    />
+  ) : (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={hint}
+      className="h-[50vh] w-full rounded-xl object-contain md:h-[70vh]"
+    />
+  )
+
   return (
     <MorphingDialog
       transition={{
@@ -52,24 +102,10 @@ function ProjectVideo({ src }: ProjectVideoProps) {
         duration: 0.3,
       }}
     >
-      <MorphingDialogTrigger>
-        <video
-          src={src}
-          autoPlay
-          loop
-          muted
-          className="aspect-video w-full cursor-zoom-in rounded-xl"
-        />
-      </MorphingDialogTrigger>
+      <MorphingDialogTrigger>{Thumb}</MorphingDialogTrigger>
       <MorphingDialogContainer>
-        <MorphingDialogContent className="relative aspect-video rounded-2xl bg-zinc-50 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950 dark:ring-zinc-800/50">
-          <video
-            src={src}
-            autoPlay
-            loop
-            muted
-            className="aspect-video h-[50vh] w-full rounded-xl md:h-[70vh]"
-          />
+        <MorphingDialogContent className="relative rounded-2xl bg-zinc-50 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950 dark:ring-zinc-800/50">
+          {Full}
         </MorphingDialogContent>
         <MorphingDialogClose
           className="fixed top-6 right-6 h-fit w-fit rounded-full bg-white p-1"
@@ -137,8 +173,9 @@ export default function Personal() {
       >
         <div className="flex-1">
           <p className="text-zinc-600 dark:text-zinc-400">
-            Focused on creating intuitive and performant web experiences.
-            Bridging the gap between design and development.
+            Hello, my name is Nicholas Amalraj, and I&apos;m a rising senior 
+            at the University of Michigan studying computer science. My interests are 
+            in fullstack/backend development, distributed systems, and AI engineering.
           </p>
         </div>
       </motion.section>
@@ -150,9 +187,12 @@ export default function Personal() {
         <h3 className="mb-5 text-lg font-medium">Selected Projects</h3>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {PROJECTS.map((project) => (
-            <div key={project.name} className="space-y-2">
+            <div key={project.id} className="space-y-2">
               <div className="relative rounded-2xl bg-zinc-50/40 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
-                <ProjectVideo src={project.video} />
+                <ZoomableMedia
+                  src={project.src}
+                  hint={`Add a screenshot/gif for “${project.name}”`}
+                />
               </div>
               <div className="px-1">
                 <a
@@ -161,10 +201,13 @@ export default function Personal() {
                   target="_blank"
                 >
                   {project.name}
-                  <span className="absolute bottom-0.5 left-0 block h-[1px] w-full max-w-0 bg-zinc-900 dark:bg-zinc-50 transition-all duration-200 group-hover:max-w-full"></span>
+                  <span className="absolute bottom-0.5 left-0 block h-[1px] w-full max-w-0 bg-zinc-900 transition-all duration-200 group-hover:max-w-full dark:bg-zinc-50"></span>
                 </a>
                 <p className="text-base text-zinc-600 dark:text-zinc-400">
                   {project.description}
+                </p>
+                <p className="mt-1.5 font-[family-name:var(--font-geist-mono)] text-xs text-zinc-500 dark:text-zinc-500">
+                  {project.tech}
                 </p>
               </div>
             </div>
@@ -214,35 +257,29 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-3 text-lg font-medium">Blog</h3>
-        <div className="flex flex-col space-y-0">
-          <AnimatedBackground
-            enableHover
-            className="h-full w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/80"
-            transition={{
-              type: 'spring',
-              bounce: 0,
-              duration: 0.2,
-            }}
-          >
-            {BLOG_POSTS.map((post) => (
-              <Link
-                key={post.uid}
-                className="-mx-3 rounded-xl px-3 py-3"
-                href={post.link}
-                data-id={post.uid}
-              >
-                <div className="flex flex-col space-y-1">
-                  <h4 className="font-normal dark:text-zinc-100">
-                    {post.title}
-                  </h4>
-                  <p className="text-zinc-500 dark:text-zinc-400">
-                    {post.description}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </AnimatedBackground>
+        <h3 className="mb-1 text-lg font-medium">Travels</h3>
+        <p className="mb-5 text-sm text-zinc-500 dark:text-zinc-400">
+          A few pictures from my recent travels.
+        </p>
+        <div className="grid grid-cols-2 gap-4">
+          {TRAVELS.map((travel) => (
+            <div key={travel.id} className="space-y-2">
+              <div className="relative rounded-2xl bg-zinc-50/40 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
+                <ZoomableMedia
+                  src={travel.src}
+                  hint={`Add a travel photo (${travel.id})`}
+                />
+              </div>
+              <div className="px-1">
+                <h4 className="font-normal dark:text-zinc-100">
+                  {travel.place}
+                </h4>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                  {travel.caption}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </motion.section>
 
@@ -252,7 +289,7 @@ export default function Personal() {
       >
         <h3 className="mb-5 text-lg font-medium">Connect</h3>
         <p className="mb-5 text-zinc-600 dark:text-zinc-400">
-          Feel free to contact me at{' '}
+          Feel free to reach me at{' '}
           <a className="underline dark:text-zinc-300" href={`mailto:${EMAIL}`}>
             {EMAIL}
           </a>
