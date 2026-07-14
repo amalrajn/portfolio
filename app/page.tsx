@@ -274,9 +274,6 @@ export default function Personal() {
                 <h4 className="font-normal dark:text-zinc-100">
                   {travel.place}
                 </h4>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                  {travel.caption}
-                </p>
               </div>
             </div>
           ))}
