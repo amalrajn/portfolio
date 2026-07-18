@@ -34,10 +34,10 @@ export const PROJECTS: Project[] = [
   {
     name: 'World Cup RAG Pipeline',
     description:
-      'RAG Pipeline to help Gemini 2.5 Flash answer World Cup trivia questions correctly.',
+      'RAG Pipeline to help Gemini 2.5 Flash answer World Cup trivia questions correctly (15-20 second startup time).',
     tech: 'Python · ChromaDB · SentenceTransformers · Gemini 2.5 Flash · Gradio',
-    link: 'https://world-cup-rag-pipeline-215930731805.us-central1.run.app/?', // TODO: your live demo URL (Gradio/HF Space) or GitHub repo
-    src: '/projects/wc_rag.png', // TODO: drop a screenshot or gif at /public/projects/worldcup-rag.jpg
+    link: 'https://world-cup-rag-pipeline-215930731805.us-central1.run.app/?',
+    src: '/projects/wc_rag.png',
     id: 'project-rag',
   },
   {
@@ -45,17 +45,17 @@ export const PROJECTS: Project[] = [
     description:
       'Machine Learning model to predict the entire Euro 2024 tournament.',
     tech: 'Python · scikit-learn · pandas · MySQL',
-    link: 'https://github.com/ayannair/euros_2024_predictor', // TODO: GitHub repo URL
-    src: '/projects/EURO2024.jpg', // TODO: drop a screenshot or gif at /public/projects/search-engine.jpg
+    link: 'https://github.com/ayannair/euros_2024_predictor',
+    src: '/projects/EURO2024.jpg',
     id: 'project-search',
   },
   {
     name: 'M-Gym (WIP)',
     description:
       'Real-time and predictive crowd tracking for UMich recreation centers.',
-    tech: 'Node.js · Express.js · React.js · PostgreSQL · Redis · AWS',
-    link: 'https://github.com/amalrajn/m-gym', // TODO: GitHub repo URL
-    src: '/projects/hadley.jpg', // TODO: drop a screenshot or gif at /public/projects/pager.jpg
+    tech: 'Node.js · Express.js · React.js · PostgreSQL · Redis · AWS · Docker',
+    link: 'https://github.com/amalrajn/m-gym',
+    src: '/projects/hadley.jpg',
     id: 'project-pager',
   },
 ]
@@ -90,22 +90,22 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
 export const TRAVELS: Travel[] = [
   {
     place: 'Tottenham Hotspur Stadium',
-    src: '/travel/thfc_stad.jpeg', // TODO: drop a photo at /public/travel/photo-1.jpg
+    src: '/travel/thfc_stad.jpeg',
     id: 'travel-1',
   },
   {
     place: 'Horseshoe Bend',
-    src: '/travel/h_bend.jpeg', // TODO: drop a photo at /public/travel/photo-2.jpg
+    src: '/travel/h_bend.jpeg',
     id: 'travel-2',
   },
   {
     place: 'Swiss Alps',
-    src: '/travel/swiss_alps.jpeg', // TODO: drop a photo at /public/travel/photo-3.jpg
+    src: '/travel/swiss_alps.jpeg',
     id: 'travel-3',
   },
   {
     place: 'Cologne Cathedral',
-    src: '/travel/koln_cathedral.jpeg', // TODO: drop a photo at /public/travel/photo-4.jpg
+    src: '/travel/koln_cathedral.jpeg',
     id: 'travel-4',
   },
 ]
